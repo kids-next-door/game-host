@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 
-export default props => (
+export default props => {
+  // alert(JSON.stringify(props))
+
+return (
   <div>
     <h2>Scoreboard</h2>
 
     <div className='rows'>
-      {props.players.map(player => {
+      {props.scores.map(record => {
 
         return (
           <div className='row'>
-            <p>{player.name} - {player.wins}</p>
+            <p>{record.name} - {record.score}</p>
           </div>
         )
 
@@ -17,3 +20,4 @@ export default props => (
     </div>
   </div>
 )
+}

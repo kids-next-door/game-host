@@ -100,9 +100,7 @@ const App = props => {
               </EnforceAuth>
             </Route>
             <Route path="/game/:id">
-              <EnforceAuth redirectTo="/">
-                <GameScreen/>
-              </EnforceAuth>
+              <GameScreen/>
             </Route>
           </Switch>
         </div>

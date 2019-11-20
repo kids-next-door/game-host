@@ -7,8 +7,6 @@ export default props => (
     <div className='rows'>
       {props.players.map(player => (
         <div className='row'>
-
-
           <h1>{player.rank}. {player.name} - {player.duration}</h1>
         </div>
       ))}
