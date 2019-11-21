@@ -35,7 +35,7 @@ const State = props => {
     return <Redirect to={`/game/${snapshot.key}/over`}/>
   }
 
-  if (!game.connected_players) {
+  if (!game.connected_players || !game.paths || !game.scores) {
     return <NoPlayers/>
   }
 
@@ -52,14 +52,14 @@ const State = props => {
     }
     return null
   }
-  
-  let players = Object.keys(game.connected_players)
-                          .map(playerID => ({
-                            id: playerID,
-                            progress: `${progress(playerID)}/${game.paths[playerID].length}`,
-                            ...game.connected_players[playerID],
-                          }))
 
+  const players = Object.keys(game.connected_players)
+                    .map(playerID => ({
+                      id: playerID,
+                      progress: `${progress(playerID)}/${game.paths[playerID].length}`,
+                      ...game.connected_players[playerID],
+                    }))
+  
   if (game.player_state) {
     const completions = utilities.timeToComplete(game)
 
