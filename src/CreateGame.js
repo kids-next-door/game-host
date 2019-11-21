@@ -73,7 +73,7 @@ const Render = props => {
         props.players.map(p => <p>{p.name}</p>)
       }
 
-      {props.game && props.players.length > 0 &&
+      {props.game && props.players.length > 1 &&
         <Link to={`/game/${props.gameKey}`}>
           <Button
             variant="contained"

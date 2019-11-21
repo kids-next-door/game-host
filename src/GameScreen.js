@@ -53,7 +53,7 @@ const State = props => {
     return null
   }
 
-  const players = Object.keys(game.connected_players)
+  let players = Object.keys(game.connected_players)
                     .map(playerID => ({
                       id: playerID,
                       progress: `${progress(playerID)}/${game.paths[playerID].length}`,
