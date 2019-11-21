@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import logo from './logo.svg'
-import './App.css'
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import logo from "./logo.svg";
+import "./App.css";
 
-import GameScreen from './GameScreen';
-import CreateGame from './CreateGame';
-import GameOver from './GameOver';
-import Login from './Login';
-import SignUp from './SignUp';
+import GameScreen from "./GameScreen";
+import CreateGame from "./CreateGame";
+import GameOver from "./GameOver";
+import Login from "./Login";
+import SignUp from "./SignUp";
 
-import { logout, registerStateListener } from './auth'
+import { logout, registerStateListener } from "./auth";
 
 import {
   BrowserRouter as Router,
@@ -19,94 +19,92 @@ import {
   useParams,
   useRouteMatch,
   Redirect
-} from 'react-router-dom'
+} from "react-router-dom";
 
 const createMenuButton = details => (
-  <Link to={details.to} style={{ textDecoration: 'none' }}>
-    <Button onClick={details.onClick} style={{ color: 'blue', fontSize: 25 }}>
+  <Link to={details.to} style={{ textDecoration: "none" }}>
+    <Button onClick={details.onClick} style={{ color: "blue", fontSize: 25 }}>
       <b>{details.text}</b>
     </Button>
   </Link>
-)
+);
 
 const createMenu = ({ authState }) => {
-  let menuItems = []
+  let menuItems = [];
 
   if (authState) {
-    menuItems.push({ to: '/new-game', text: 'New Game' })
-    menuItems.push({ onClick: () => logout(), text: 'Logout' })
+    //menuItems.push({ to: "/new-game", text: "New Game" });
   } else {
-    menuItems.push({ to: '/', text: 'Login' })
-    menuItems.push({ to: '/signup', text: 'Sign Up' })
+    menuItems.push({ to: "/", text: "Login" });
+    menuItems.push({ to: "/signup", text: "Sign Up" });
   }
 
-  const menuButtons = menuItems.map(createMenuButton)
+  const menuButtons = menuItems.map(createMenuButton);
 
   return (
     <div style={{ marginTop: 10, marginBottom: 10 }}>
+      <img src="../logo.png" style={{ height: 70 }} />
+
       {menuButtons.map(o => (
-        <span style={{ margin: 20 }}>
-          {o}
-        </span>
+        <span style={{ margin: 20 }}>{o}</span>
       ))}
     </div>
-  )
-}
+  );
+};
 
 const App = props => {
-  const [authState, setAuthState] = useState()
-  registerStateListener(setAuthState)
+  const [authState, setAuthState] = useState();
+  registerStateListener(setAuthState);
 
   // if not authenticated, redirect to login
   const EnforceAuth = props => {
-    return authState ? props.children : <Redirect to={props.redirectTo}/>
-  }
+    return authState ? props.children : <Redirect to={props.redirectTo} />;
+  };
   // if authenticated, redirect elsewhere
   const AllowSkipAuth = props => {
-    return authState ? <Redirect to={props.redirectTo}/> : props.children
-  }
+    return authState ? <Redirect to={props.redirectTo} /> : props.children;
+  };
 
-  const menu = createMenu({ authState })
+  const menu = createMenu({ authState });
 
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
+      <header className="App-header"></header>
       <Router>
-        <div style={{ width: '100%' }}>
+        <div style={{ width: "100%" }}>
           {menu}
 
-          <hr style={{ width: '100%' }}/>
+          <hr style={{ width: "100%", margin: 0 }} />
 
           <Switch>
             <Route exact path="/">
               <AllowSkipAuth redirectTo="/new-game">
-                <Login/>
+                <Login />
               </AllowSkipAuth>
             </Route>
             <Route path="/signup">
               <AllowSkipAuth redirectTo="/new-game">
-                <SignUp/>
+                <SignUp />
               </AllowSkipAuth>
             </Route>
             <Route path="/new-game">
               <EnforceAuth redirectTo="/">
-                <CreateGame/>
+                <CreateGame />
               </EnforceAuth>
             </Route>
             <Route path="/game/:id/over">
               <EnforceAuth redirectTo="/">
-                <GameOver/>
+                <GameOver />
               </EnforceAuth>
             </Route>
             <Route path="/game/:id">
-              <GameScreen/>
+              <GameScreen />
             </Route>
           </Switch>
         </div>
       </Router>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
