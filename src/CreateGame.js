@@ -110,7 +110,7 @@ const Render = props => {
           marginTop: "50px"
         }}
       >
-        Players
+        Players:
       </h1>
       {props.players.length === 0 && (
         <p
