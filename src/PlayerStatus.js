@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { flexbox } from "@material-ui/system";
 
 const entryForPlayer = player => {
   let entry = `${player.name}`;
@@ -9,7 +10,10 @@ const entryForPlayer = player => {
     entry = `${entry} - ${player.progress}`;
   }
 
-  return <p>{entry}</p>;
+  return (<div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+      <div style={{width: '15px', height: '15px', backgroundColor: player.color, marginRight: '10px'}}></div>
+      <div><p>{entry}</p></div>
+    </div>)
 };
 
 export default props => (
@@ -28,7 +32,7 @@ export default props => (
 
     <div className="rows">
       {props.players.map(player => (
-        <div className="row">{entryForPlayer(player)}</div>
+        entryForPlayer(player)
       ))}
     </div>
   </div>

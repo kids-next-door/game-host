@@ -20,6 +20,19 @@ const pointEquals = (a, b) => a.x === b.x && a.y === b.y;
 const NoGameFound = () => <h1>No Game Found!</h1>;
 const NoPlayers = () => <h1>No players have connected!</h1>;
 
+const colors = [
+  'hsl(36, 100%, 50%)',
+  'hsl(180, 100%, 50%)',
+  'hsl(72, 100%, 50%)',
+  'hsl(288, 100%, 50%)',
+  'hsl(108, 100%, 50%)',
+  'hsl(252, 100%, 50%)',
+  'hsl(144, 100%, 50%)',
+  'hsl(216, 100%, 50%)',
+  'hsl(324, 100%, 50%)',
+  'hsl(360, 100%, 50%)'
+]
+
 const State = props => {
   const params = useParams();
   const gameID = params.id;
@@ -54,10 +67,11 @@ const State = props => {
     }
     return null;
   };
-
+  let playerCount = 0
   let players = Object.keys(game.connected_players).map(playerID => ({
     id: playerID,
     progress: `${progress(playerID)}/${game.paths[playerID].length}`,
+    color: colors[playerCount++],
     ...game.connected_players[playerID]
   }));
 
@@ -98,6 +112,7 @@ const Render = ({ game, players, scores }) => (
         Game Code: {game.code}
       </h2>
       <Gameboard
+        players={players}
         columnCount={game.grid_size.width}
         rowCount={game.grid_size.height}
       />
